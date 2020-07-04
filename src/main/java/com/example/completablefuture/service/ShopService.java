@@ -14,7 +14,7 @@ import java.util.concurrent.Future;
 @Service
 public class ShopService {
 
-    public Map<String, Object> getSyncPrice(RequestType type) throws ExecutionException, InterruptedException {
+    public Map<String, Object> getPrice(RequestType type) throws ExecutionException, InterruptedException {
         long beforeTime = System.currentTimeMillis();
         List<Map<Long, Double>> prices = type.equals(RequestType.sync) ? getPricesSync() : getPricesAsync();
         long afterTime = System.currentTimeMillis();
@@ -30,7 +30,7 @@ public class ShopService {
         List<Map<Long, Double>> prices = new ArrayList<>();
         for (int i = 0; i < 10; ++i) {
             Shop shop = new Shop(i, RandomUtil.getRandomString(5));
-            Double price = getSyncPrice(shop, RandomUtil.getRandomString(3));
+            Double price = getPrice(shop, RandomUtil.getRandomString(3));
             prices.add(Map.of(shop.getId(), price));
         }
         return prices;
@@ -67,7 +67,7 @@ public class ShopService {
         return futurePrice;
     }
 
-    private double getSyncPrice(Shop shop, String product) {
+    private double getPrice(Shop shop, String product) {
         return calculatePrice(shop.getRandom(), product);
     }
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @Controller
 public class ShopApiController {
@@ -17,17 +18,13 @@ public class ShopApiController {
     private ShopService shopService;
 
     @GetMapping("/")
-    public ResponseEntity<String> connectTest(){
+    public ResponseEntity<String> connectTest() {
         return ResponseEntity.ok("success connecting");
     }
 
     @GetMapping("/price")
-    public ResponseEntity<Map> getPrice(@RequestParam("type") RequestType type) {
-        if (type.equals(RequestType.sync)){
-            return ResponseEntity.ok(shopService.getSyncPrice());
-        }
-
-        return null;
+    public ResponseEntity<Map> getPrice(@RequestParam("type") RequestType type) throws ExecutionException, InterruptedException {
+        return ResponseEntity.ok(shopService.getPrice(type));
     }
 
 }
