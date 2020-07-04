@@ -1,33 +1,21 @@
 package com.example.completablefuture.domain;
 
 import com.example.completablefuture.utils.TimerUtil;
+import lombok.Getter;
 
 import java.util.Random;
 
+@Getter
 public class Shop {
 
+    private long id;
     private String name;
     private Random random;
 
-    public Shop(String name){
+    public Shop(long id, String name){
+        this.id = id;
         this.name = name;
         random = new Random(name.charAt(0) * name.charAt(1) * name.charAt(2));
     }
-
-    public double getPrice(String product){
-        return calculatePrice(product);
-    }
-
-    private double calculatePrice(String product){
-        TimerUtil.delay();
-        return random.nextDouble() * product.charAt(0) + product.charAt(1);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-
-
 
 }
